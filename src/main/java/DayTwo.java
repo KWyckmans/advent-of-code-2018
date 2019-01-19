@@ -1,3 +1,4 @@
+import utils.BoxFinder;
 import utils.ChecksumCalculator;
 
 import java.io.IOException;
@@ -12,6 +13,9 @@ public class DayTwo {
             Path file = Paths.get(DayOne.class.getResource("daytwo/input.txt").toURI());
             ChecksumCalculator calculator = new ChecksumCalculator(file);
             System.out.println(calculator.calculateChecksum());
+
+            BoxFinder finder = new BoxFinder(file);
+            System.out.println(finder.getBox());
         } catch (URISyntaxException e) {
             System.err.println("Could not find specified file");
         } catch (IOException e) {
