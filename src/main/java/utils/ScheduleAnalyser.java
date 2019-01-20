@@ -1,8 +1,10 @@
 package utils;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class ScheduleAnalyser {
     private final GuardSchedules schedule;
@@ -10,6 +12,10 @@ public class ScheduleAnalyser {
 
     public ScheduleAnalyser(GuardSchedules schedule) {
         this.schedule = schedule;
+    }
+
+    public Optional<Guard> getMostSleepingGuard(){
+        return guards.values().stream().max(Comparator.comparingInt(g -> g.totalMinutesAsleep));
     }
 
     public void analyse() {
