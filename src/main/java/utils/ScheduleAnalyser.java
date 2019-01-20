@@ -26,7 +26,8 @@ public class ScheduleAnalyser {
                     String id = s.getGuardId();
                     Guard guard = guards.getOrDefault(id, new Guard(id));
 
-                    List<GuardSchedules.ScheduleEntry> guardSchedule = schedule.getScheduleFor(s.timestamp.toLocalDate());
+                    System.out.println("Looking up schedule for " + guard + " on " + s.timestamp);
+                    List<GuardSchedules.ScheduleEntry> guardSchedule = schedule.getScheduleFor(s.timestamp.toLocalDate(), guard);
 
                     guardSchedule.forEach(sched -> {
                         if (sched.action.startsWith("falls")) {

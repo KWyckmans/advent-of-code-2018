@@ -50,12 +50,27 @@ public class GuardSchedules implements Iterable<ScheduleEntry> {
                 .forEach(System.out::println);
     }
 
-    public List<ScheduleEntry> getScheduleFor(LocalDate date) {
-        return schedules
-                .stream()
+    public List<ScheduleEntry> getScheduleFor(LocalDate date, Guard guard) {
+        ScheduleEntry start = schedules.stream()
                 .filter(s -> s.timestamp.toLocalDate().isEqual(date))
-                .filter(s -> s.action.contains("wakes") || s.action.contains("falls"))
-                .collect(Collectors.toList());
+                .filter(s -> s.action.startsWith("Guard " + guard.getId() ))
+                .collect(Collectors.toList()).get(0);
+
+        int startIndex = schedules.indexOf(start);
+        boolean endFound = false;
+        int endIndex = startIndex + 1;
+
+        while(!endFound && endIndex < schedules.size()){
+            ScheduleEntry next = schedules.get(endIndex);
+
+            if(next.action.contains("Guard")){
+                endFound = true;
+            }
+
+            endIndex++;
+        }
+
+        return schedules.subList(startIndex + 1, endIndex - 1);
     }
 
     @Override

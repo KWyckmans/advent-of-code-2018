@@ -3,6 +3,7 @@ package utils;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Guard {
     private Map<Integer, Integer> sleepPattern = new HashMap<>();
@@ -23,10 +24,10 @@ public class Guard {
     }
 
     public void wakeUp(LocalDateTime time) {
-        System.out.println("Guard " + id + " waking up at " + time);
         isAsleep = false;
-        int minutesAsleep = time.getMinute() - lastFellAsleepAt;
+        int minutesAsleep = time.getMinute()  - lastFellAsleepAt;
         totalMinutesAsleep += minutesAsleep;
+        System.out.println("Guard " + id + " woke up at " + time + ". Slept for " + minutesAsleep + " mins. Current sleep total is " + totalMinutesAsleep + " minutes");
 
         markPeriodAsSleeping(lastFellAsleepAt, time.getMinute());
     }
@@ -54,6 +55,11 @@ public class Guard {
 
     @Override
     public String toString() {
-        return "Guard (" +id+ ")";
+        return "Guard (" +id+ "): \n";
+//                sleepPattern.keySet().stream().map( k -> "minute: " + k + " - value: " + sleepPattern.get(k) + '\n').collect(Collectors.joining());
+    }
+
+    public String getId() {
+        return this.id;
     }
 }

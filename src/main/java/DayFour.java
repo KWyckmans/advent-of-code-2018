@@ -11,17 +11,17 @@ import java.util.Optional;
 public class DayFour {
     public static void main(String[] args) {
         try {
-            Path file = Paths.get(DayFour.class.getResource("dayfour.txt").toURI());
+            Path file = Paths.get(DayFour.class.getResource("dayfour-test.txt").toURI());
+
             GuardSchedules schedule = new GuardSchedules(file);
             ScheduleAnalyser analyser = new ScheduleAnalyser(schedule);
             analyser.analyse();
+
             Optional<Guard> sleepy = analyser.getMostSleepingGuard();
-
-            System.out.println(sleepy.get());
-
             int sleepiestMinute = sleepy.get().getSleepiestMinute();
 
-            System.out.println(sleepiestMinute);
+            System.out.println("The sleepiest guard is " +  sleepy.get() +". He was sleeping the most on minute: " + sleepiestMinute + ". He slept for a total of " + sleepy.get().totalMinutesAsleep + " minutes.");
+            System.out.println("Result is " + sleepy.get().getId() + " x " + sleepy.get().getSleepiestMinute());
         } catch (URISyntaxException | IOException e) {
             e.printStackTrace();
         }
