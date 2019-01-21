@@ -29,6 +29,7 @@ public class GuardSchedules implements Iterable<ScheduleEntry> {
                 });
 
         schedules.sort(Comparator.comparing(a -> a.timestamp));
+        schedules.forEach(System.out::println);
     }
 
     public List<ScheduleEntry> getGuardStarts() {
@@ -70,7 +71,13 @@ public class GuardSchedules implements Iterable<ScheduleEntry> {
             endIndex++;
         }
 
-        return schedules.subList(startIndex + 1, endIndex - 1);
+        if(endIndex == schedules.size()) {
+//            System.out.println("Schedule for " + guard + ": " + schedules.subList(startIndex + 1, endIndex));
+            return schedules.subList(startIndex + 1, endIndex);
+        } else {
+//            System.out.println("Schedule for " + guard + ": " + schedules.subList(startIndex + 1, endIndex - 1));
+            return schedules.subList(startIndex + 1, endIndex - 1);
+        }
     }
 
     @Override
@@ -107,8 +114,10 @@ public class GuardSchedules implements Iterable<ScheduleEntry> {
     public static class ScheduleEntry {
         LocalDateTime timestamp;
         String action;
+        String original;
 
         ScheduleEntry(String entry) {
+            this.original = entry;
             String datePart = entry.split("] ")[0].substring(1);
             this.timestamp = LocalDateTime.parse(datePart, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
             this.action = entry.split("]")[1].trim();
@@ -116,7 +125,7 @@ public class GuardSchedules implements Iterable<ScheduleEntry> {
 
         @Override
         public String toString() {
-            return timestamp.toString() + ": " + action + "\n";
+            return original;
         }
 
         public String getGuardId() {

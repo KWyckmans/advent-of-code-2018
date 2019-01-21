@@ -18,16 +18,19 @@ public class Guard {
     }
 
     public void fallAsleep(LocalDateTime time) {
-        System.out.println("Guard " + id + " falling asleep at " + time);
+//        System.out.println("Guard " + id + " falling asleep at " + time);
         isAsleep = true;
         lastFellAsleepAt = time.getMinute();
     }
 
     public void wakeUp(LocalDateTime time) {
         isAsleep = false;
-        int minutesAsleep = time.getMinute()  - lastFellAsleepAt;
+        int minutesAsleep = time.getMinute() - lastFellAsleepAt;
         totalMinutesAsleep += minutesAsleep;
-        System.out.println("Guard " + id + " woke up at " + time + ". Slept for " + minutesAsleep + " mins. Current sleep total is " + totalMinutesAsleep + " minutes");
+//
+//        if (id.equals("#449")) {
+//            System.out.println("Guard " + id + " fell asleep at " + lastFellAsleepAt +" and woke up at " + time.getMinute() + ". Slept for " + minutesAsleep + " mins. Current sleep total is " + totalMinutesAsleep + " minutes");
+//        }
 
         markPeriodAsSleeping(lastFellAsleepAt, time.getMinute());
     }
@@ -36,17 +39,24 @@ public class Guard {
         for (int i = start; i < end; i++) {
             int minutesSleeping = sleepPattern.getOrDefault(i, 0) + 1;
             sleepPattern.put(i, minutesSleeping);
+
+//            if (id.equals("#449")){
+//                System.out.println("Incrementing minute " + i);
+//            }
         }
     }
 
-    public int getSleepiestMinute(){
+    public int getSleepiestMinute() {
         int maxMinutesSlept = 0;
         int maxKey = 0;
 
-        for(int key : sleepPattern.keySet()){
+        for (int key : sleepPattern.keySet()) {
             int minutes = sleepPattern.get(key);
-            if(maxMinutesSlept < minutes){
+//            System.out.println("minute " + key + " has " + minutes + " minutes of sleep. Current max is " + maxMinutesSlept);
+            if (maxMinutesSlept < minutes) {
+//                System.out.println("Swapping values");
                 maxKey = key;
+                maxMinutesSlept = minutes;
             }
         }
 
@@ -55,7 +65,7 @@ public class Guard {
 
     @Override
     public String toString() {
-        return "Guard (" +id+ "): \n";
+        return "Guard (" + id + ")";
 //                sleepPattern.keySet().stream().map( k -> "minute: " + k + " - value: " + sleepPattern.get(k) + '\n').collect(Collectors.joining());
     }
 

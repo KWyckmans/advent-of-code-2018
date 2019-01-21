@@ -11,7 +11,7 @@ import java.util.Optional;
 public class DayFour {
     public static void main(String[] args) {
         try {
-            Path file = Paths.get(DayFour.class.getResource("dayfour-test.txt").toURI());
+            Path file = Paths.get(DayFour.class.getResource("dayfour.txt").toURI());
 
             GuardSchedules schedule = new GuardSchedules(file);
             ScheduleAnalyser analyser = new ScheduleAnalyser(schedule);

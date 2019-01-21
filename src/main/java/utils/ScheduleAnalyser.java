@@ -15,6 +15,7 @@ public class ScheduleAnalyser {
     }
 
     public Optional<Guard> getMostSleepingGuard(){
+        guards.values().stream().forEach(g -> System.out.println(g.getId() + ": " + g.totalMinutesAsleep));
         return guards.values().stream().max(Comparator.comparingInt(g -> g.totalMinutesAsleep));
     }
 
@@ -26,8 +27,11 @@ public class ScheduleAnalyser {
                     String id = s.getGuardId();
                     Guard guard = guards.getOrDefault(id, new Guard(id));
 
-                    System.out.println("Looking up schedule for " + guard + " on " + s.timestamp);
                     List<GuardSchedules.ScheduleEntry> guardSchedule = schedule.getScheduleFor(s.timestamp.toLocalDate(), guard);
+
+//                    if(guard.getId().equals("#449")){
+//                        System.out.println(guardSchedule);
+//                    }
 
                     guardSchedule.forEach(sched -> {
                         if (sched.action.startsWith("falls")) {
