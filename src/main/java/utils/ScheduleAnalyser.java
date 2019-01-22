@@ -24,7 +24,7 @@ public class ScheduleAnalyser {
 
         guardStarts.forEach(
                 s -> {
-                    String id = s.getGuardId();
+                    String id = String.valueOf(s.getGuardId());
                     Guard guard = guards.getOrDefault(id, new Guard(id));
 
                     List<GuardSchedules.ScheduleEntry> guardSchedule = schedule.getScheduleFor(s.timestamp.toLocalDate(), guard);

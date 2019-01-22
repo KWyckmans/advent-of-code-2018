@@ -112,11 +112,11 @@ public class GuardSchedules implements Iterable<ScheduleEntry> {
     }
 
     public static class ScheduleEntry {
-        LocalDateTime timestamp;
-        String action;
+        public LocalDateTime timestamp;
+        public String action;
         String original;
 
-        ScheduleEntry(String entry) {
+        public ScheduleEntry(String entry) {
             this.original = entry;
             String datePart = entry.split("] ")[0].substring(1);
             this.timestamp = LocalDateTime.parse(datePart, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
@@ -128,11 +128,11 @@ public class GuardSchedules implements Iterable<ScheduleEntry> {
             return original;
         }
 
-        public String getGuardId() {
+        public int getGuardId() {
             if (action.startsWith("Guard")) {
-                return "#" + action.split("#")[1].split(" ")[0];
+                return Integer.valueOf(action.split("#")[1].split(" ")[0]);
             } else {
-                return "";
+                return -1;
             }
         }
     }
